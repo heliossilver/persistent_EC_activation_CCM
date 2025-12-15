@@ -1,0 +1,7 @@
+
+# conda environments:
+#
+base                   /home/malr20/miniforge3
+atacseq                /home/malr20/miniforge3/envs/atacseq
+macs2_env            * /home/malr20/miniforge3/envs/macs2_env
+
