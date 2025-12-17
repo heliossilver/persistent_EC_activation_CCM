@@ -79,5 +79,5 @@ Individual scripts may require additional packages; see script headers for detai
 - R scripts are meant to be run from the script folder.
 - Bash scripts are meant to be run from main folder.
 - Scripts were developed for internal reproducibility. 
-
+- Raw and processed sequencing data will be available through GEO (GSE313328) when published.
 ---
