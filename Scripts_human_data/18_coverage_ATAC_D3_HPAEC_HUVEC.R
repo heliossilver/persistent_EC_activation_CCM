@@ -81,6 +81,12 @@ huvec_ccm_strict <- huvec_ccm[ !overlapsAny(huvec_ccm, huvec_veh) ]
 hcmec_ccm_strict <- hcmec_ccm[ !overlapsAny(hcmec_ccm, hcmec_veh) ]
 common_ccm_strict <- common_ec_ccm[ !overlapsAny(common_ec_ccm, common_ec_veh) ]
 
+dir.create("../results/Human_cells/Homer/hEC_response_CCM", recursive = TRUE, showWarnings = FALSE)
+rtracklayer::export(object = hpaec_ccm_strict, "../results/Human_cells/Homer/hEC_response_CCM/hpaec_ccm_strict.bed", format = "bed")
+rtracklayer::export(object = huvec_ccm_strict, "../results/Human_cells/Homer/hEC_response_CCM/huvec_ccm_strict.bed", format = "bed")
+rtracklayer::export(object = hcmec_ccm_strict, "../results/Human_cells/Homer/hEC_response_CCM/hcmec_ccm_strict.bed", format = "bed")
+rtracklayer::export(object = common_ccm_strict, "../results/Human_cells/Homer/hEC_response_CCM/common_ccm_strict.bed", format = "bed")
+
 gr_sets_ccm_human <- c(hpaec_ccm_strict,  
                        huvec_ccm_strict,
                        hcmec_ccm_strict,
