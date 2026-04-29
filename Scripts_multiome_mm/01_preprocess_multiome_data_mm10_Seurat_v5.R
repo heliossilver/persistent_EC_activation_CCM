@@ -1,6 +1,6 @@
 #Libraries
 
-pacman::p_load("Seurat", "Signac", "harmony", 
+pacman::p_load("Seurat", "Signac", "harmony", "stringr",
                "dplyr", "ggplot2", "rtracklayer",
                "DoubletFinder", "EnsDb.Mmusculus.v79")
 
@@ -27,7 +27,7 @@ for (loop_var in samples) {
     message(glue::glue("⏳ Processing {loop_var}..."))
     
     # 1. Load raw counts (RNA and ATAC)
-    data <- Read10X_h5(sprintf('../multiome_h5_fragments/%s_filtered_feature_bc_matrix.h5',loop_var))
+    data <- Read10X_h5(sprintf('../multiome_h5_fragments/%s_filtered_feature_bc_matrix.h5', str_to_lower(loop_var)))
     rna_counts <- data$`Gene Expression`
     atac_counts <- data$Peaks
     
