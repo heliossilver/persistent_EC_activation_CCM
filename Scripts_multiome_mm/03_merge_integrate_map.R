@@ -37,7 +37,7 @@ combined_plot <- plot_grid(vln_RNA.p, vln_feat.p, vln_mt.p, vln_count.p, vln_TSS
 ggsave("../results/plots/graphs_endo/qc_violin_combined.png", combined_plot, width = 12, height = 8, dpi = 300)
 
 ## ----Load filtered Seurat objects with cell cycle scores----------------------------------------------------------------------------------
-filtered <- setNames(lapply(tolower(sample_names), function(name) {
+filtered <- setNames(lapply(sample_names, function(name) {
   readRDS(glue("../results/seurat_objects/filtered_ccscore/{name}_filtered_ccscore.rds"))
 }), sample_names)
 
