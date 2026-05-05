@@ -12,7 +12,7 @@ endo_filt <- readRDS("../results/seurat_objects/merged/endo_filtered_mapped.rds"
 
 
 # Re-cluster at high resolution for subtype dissection
-endo_filt <- FindNeighbors(endo_filt, reduction = "integrated.cca", dims = 1:15, graph.name = "res") %>% 
+endo_filt <- FindNeighbors(endo_filt, reduction = "integrated.cca", dims = 1:15) %>% 
   FindClusters(resolution = 5)
 
 
