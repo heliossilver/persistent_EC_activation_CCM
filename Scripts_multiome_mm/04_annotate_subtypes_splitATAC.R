@@ -238,6 +238,6 @@ SplitFragments(endo,
 saveRDS(endo, "../results/seurat_objects/merged/endo_annotated_final.rds")
 
 # ==== Reproducibility log ====
-sink("../logs/sessioninfo_04_annotate_subtypes_splitATAC.txt")
+sink("../results/logs/sessioninfo_04_annotate_subtypes_splitATAC.txt")
 sessionInfo()
 sink()
