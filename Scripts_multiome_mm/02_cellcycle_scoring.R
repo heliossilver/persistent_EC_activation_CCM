@@ -101,6 +101,6 @@ ggsave(filename = "../results/plots/graphs_endo/cell_cycle_split_by_phase.png",
        dpi = 300)
 
 # ==== Reproducibility log ====
-sink("../logs/sessioninfo_02_cellcycle_scoring.txt")
+sink("../results/logs/sessioninfo_02_cellcycle_scoring.txt")
 sessionInfo()
 sink()
