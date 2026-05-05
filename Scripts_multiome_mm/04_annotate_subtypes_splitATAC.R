@@ -72,7 +72,7 @@ ElbowPlot(endo)
 endo <- endo %>%
   FindNeighbors(reduction = "integrated.cca", dims = 1:15) %>%
   FindClusters(resolution = 0.5) %>%
-  RunUMAP(dims = 1:13, reduction = "integrated.cca")
+  RunUMAP(dims = 1:15, reduction = "integrated.cca")
 
 
 # Set cell type order and palette
