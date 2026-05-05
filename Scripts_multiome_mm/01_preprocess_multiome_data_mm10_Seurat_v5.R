@@ -83,7 +83,7 @@ for (loop_var in samples) {
 
 # ==== Reproducibility log ====
 dir.create("../results/logs", showWarnings = FALSE)
-sink("../logs/sessioninfo_01_preprocess_multiome_data_mm10_Seurat_v5.txt")
+sink("../results/logs/sessioninfo_01_preprocess_multiome_data_mm10_Seurat_v5.txt")
 sessionInfo()
 sink()
 
