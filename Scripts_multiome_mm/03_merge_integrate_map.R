@@ -104,7 +104,7 @@ endo_filt <- NormalizeData(endo_filt) %>%
 
 endo_filt <- FindNeighbors(endo_filt, reduction = "integrated.cca", dims = 1:15)
 endo_filt <- FindClusters(endo_filt,  resolution = 0.2)
-endo_filt <- RunUMAP(endo_filt, dims = 1:30, reduction = "integrated.cca")
+endo_filt <- RunUMAP(endo_filt, dims = 1:15, reduction = "integrated.cca")
 
 ## ----Map to EC Reference (Kalucka 2022)---------------------------------------------------------------------------------------------------
 source("Reference_processing.R")  # loads reference object
@@ -135,6 +135,6 @@ endo_EC_typecond <- DimPlot(endo_filt, reduction = "umap",
 ggsave("../results/plots/graphs_endo/EC_types_mapped_split.png", endo_EC_typecond, height = 12, width = 12, dpi = 500)
 
 # ==== Reproducibility log ====
-sink("../logs/sessioninfo_03_merge_integrate_map.txt")
+sink("../results/logs/sessioninfo_03_merge_integrate_map.txt")
 sessionInfo()
 sink()
