@@ -365,6 +365,6 @@ upset_peak_up <- upset(peak_up_mtx, set_order, n_intersections = 10,
 ggsave(filename = "../results/plots/graphs_endo/upset_peaks_up_KO.png", plot = upset_peak_up, width = 7, height = 5, bg = "white")
 
 # Optionally save session info
-sink("../logs/sessioninfo_09_edgeR_diff_accesibility.txt")
+sink("../results/logs/sessioninfo_09_edgeR_diff_accesibility.txt")
 sessionInfo()
 sink()
