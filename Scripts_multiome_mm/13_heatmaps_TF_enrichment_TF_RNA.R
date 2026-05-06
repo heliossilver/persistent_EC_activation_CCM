@@ -398,6 +398,6 @@ magick::image_write(combined, path = "../results/RNA_ATAC_integration/graphs/flo
 
 
 # === Log R session info for reproducibility ===
-sink("../logs/sessioninfo_13_heatmaps_TF_enrichment_TF_RNA.txt")
+sink("../results/logs/sessioninfo_13_heatmaps_TF_enrichment_TF_RNA.txt")
 sessionInfo()
 sink()
