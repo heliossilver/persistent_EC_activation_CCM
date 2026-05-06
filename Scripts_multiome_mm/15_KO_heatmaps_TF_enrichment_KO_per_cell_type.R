@@ -147,7 +147,7 @@ ComplexHeatmap::draw(hmap_top15, merge_legends = TRUE, heatmap_legend_side = "le
 dev.off()
 
 # === Log R session info for reproducibility ===
-sink("../logs/sessioninfo_15_KO_heatmaps_TF_enrichment_KO_per_cell_type.txt")
+sink("../results/logs/sessioninfo_15_KO_heatmaps_TF_enrichment_KO_per_cell_type.txt")
 sessionInfo()
 sink()
 
