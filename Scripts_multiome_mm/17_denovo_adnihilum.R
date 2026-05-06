@@ -310,7 +310,7 @@ ggsave("../results/RNA_ATAC_integration/graphs/cCRE_KO_ad_nihilum_fractions.png"
 
 
 # === Log R session info for reproducibility ===
-sink("../logs/sessioninfo_17_denovo_adnihilum.txt")
+sink("../results/logs/sessioninfo_17_denovo_adnihilum.txt")
 sessionInfo()
 sink()
 
