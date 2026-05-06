@@ -1,7 +1,7 @@
 
 pacman::p_load("tibble", "RColorBrewer", "pheatmap", "colorspace",
-               "stringr","purrr", "viridis", "ggtext",
-               "ComplexHeatmap", "circlize", "glue","patchwork",
+               "stringr", "purrr", "viridis", "ggtext", "readr",
+               "ComplexHeatmap", "circlize", "glue", "patchwork",
                "dplyr", "ggplot2", "textshape", "paletteer", "tibble", "tidyr")
 
 # Output folders----
