@@ -368,7 +368,7 @@ for (loop_var in levels(gene_link_table$cell_type)) {
     rename_with(~glue("FDR_{loop_var}_vs_rest_gene"), starts_with("FDR")) %>% 
     rename_with(~glue("diffexpressed_{loop_var}"), starts_with("diff"))
   
-  tmp_atac <- read.csv(glue("../results/ATAC/edgeR/dar_diffacc_tables/{loop_var}_KO_vs_Flox_diffacc_full.csv")) %>% 
+  tmp_atac <- read.csv(glue("../results/ATAC/edgeR/dar_diffacc_tables/{loop_var}_vs_rest_diffacc_full.csv")) %>% 
     select(peaks, starts_with("logFC"), starts_with("FDR"), diffaccessible) %>% 
     rename_with(~glue("logFC_{loop_var}_vs_rest_peak"), starts_with("logFC")) %>% 
     rename_with(~glue("FDR_{loop_var}_vs_rest_peak"), starts_with("FDR")) %>% 
@@ -780,6 +780,6 @@ ggsave(filename = glue("{graphs_folder}/putative_enhancer_annotation_KO.svg"), p
        device = "svg", width = 4.8, height = 2.5, units = "in", bg = "white")
 
 # ==== Reproducibility log ====
-sink("../logs/sessioninfo_10_gene_peak_linkage_and_homer_files.txt")
+sink("../results/logs/sessioninfo_10_gene_peak_linkage_and_homer_files.txt")
 sessionInfo()
 sink()
