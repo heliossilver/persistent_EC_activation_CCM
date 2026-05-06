@@ -343,7 +343,7 @@ color_mapping <- setNames(color_mapping, annotation_counts$label)
 
 annot_peaks_flox_enhancers <- ggplot(annotation_counts, aes(x = "", y = Percentage, fill = label)) +
   geom_bar(width = 1, stat = "identity", color = "white" ) +
-  coord_polar("y", direction = ) + 
+  coord_polar("y") + 
   scale_fill_manual(values = color_mapping) +
   theme_void() + ggtitle("Genomic annotation of putative enhancers <br><i>PDCD10</i><sup>fl/fl</sup> ") +
   theme(plot.title = element_markdown(hjust = 0.5, face = "bold"), 
@@ -351,6 +351,71 @@ annot_peaks_flox_enhancers <- ggplot(annotation_counts, aes(x = "", y = Percenta
 
 ggsave(filename = glue("{graphs_folder}/putative_enhancer_annotation_flox.svg"), plot = annot_peaks_flox_enhancers, 
        device = "svg", width = 4.8, height = 2.5, units = "in", bg = "white")
+
+levels(gene_link_table$cell_type)
+
+WT_gene_info_list <- list()
+WT_peak_info_list <- list()
+link_table_list <- list()
+for (loop_var in levels(gene_link_table$cell_type)) {
+  
+  tmp_data <- gene_link_table %>% 
+    filter(cell_type == loop_var)
+  
+  tmp_rna <- read.csv(glue("../results/RNA/edgeR/deg_difexp_tables/{loop_var}_vs_rest_diffexp_full.csv")) %>% 
+    select(gene, starts_with("logFC"), starts_with("FDR"), diffexpressed) %>%
+    rename_with(~glue("logFC_{loop_var}_vs_rest_gene"), starts_with("logFC")) %>% 
+    rename_with(~glue("FDR_{loop_var}_vs_rest_gene"), starts_with("FDR")) %>% 
+    rename_with(~glue("diffexpressed_{loop_var}"), starts_with("diff"))
+  
+  tmp_atac <- read.csv(glue("../results/ATAC/edgeR/dar_diffacc_tables/{loop_var}_KO_vs_Flox_diffacc_full.csv")) %>% 
+    select(peaks, starts_with("logFC"), starts_with("FDR"), diffaccessible) %>% 
+    rename_with(~glue("logFC_{loop_var}_vs_rest_peak"), starts_with("logFC")) %>% 
+    rename_with(~glue("FDR_{loop_var}_vs_rest_peak"), starts_with("FDR")) %>% 
+    rename_with(~glue("diffaccessible_{loop_var}"), starts_with("diff"))
+  
+  
+  WT_gene_info_list[[loop_var]] <- tmp_rna
+  WT_peak_info_list[[loop_var]] <- tmp_atac
+  link_table_list[[loop_var]] <- tmp_data
+}
+
+
+all_rna_info <- purrr::reduce(WT_gene_info_list, full_join, by = "gene") %>%
+  mutate(across(starts_with("logFC"), ~ replace_na(.x, 0)),
+         across(starts_with("FDR"), ~ replace_na(.x, 1)),
+         across(starts_with("diff"), ~ replace_na(.x, "No")))
+
+all_atac_info <- purrr::reduce(WT_peak_info_list, full_join, by = "peaks") %>%
+  mutate(across(starts_with("logFC"), ~ replace_na(.x, 0)),
+         across(starts_with("FDR"), ~ replace_na(.x, 1)),
+         across(starts_with("diff"), ~ replace_na(.x, "No")))
+
+all_links <- bind_rows(link_table_list) %>% distinct()
+
+full_WT_cCRE_FC_FDR <- all_links %>%
+  left_join(all_rna_info, by = "gene") %>%
+  left_join(all_atac_info, by = "peaks") %>% select(-cell_type)
+
+cell_order <- c("Artery", "CapArt", "Cap", "CapVein", "LargeVein")
+
+meta_cols <- c("gene", "peaks")
+
+cell_cols <- setdiff(colnames(full_WT_cCRE_FC_FDR), meta_cols)
+
+cell_cols_ordered <- unlist(
+  lapply(cell_order, function(ct) {
+    cell_cols[str_detect(cell_cols, paste0("_", ct, "($|_)"))]
+  })
+)
+
+full_WT_cCRE_FC_FDR <- full_WT_cCRE_FC_FDR %>%
+  select(all_of(meta_cols), all_of(cell_cols_ordered))
+
+
+
+write.csv(x = full_WT_cCRE_FC_FDR, file = glue("{tables_folder}/gene_enhancer_flox_per_cell_FC.csv"), row.names = FALSE)
+
 
 
 #######Process KO----
@@ -678,44 +743,6 @@ full_KO_cCRE_FC_strict <- full_KO_cCRE_FC_FDR %>%
 
 write.csv(x = full_KO_cCRE_FC_strict, file = glue("{tables_folder}/enhancers_KO_per_cell_in_all_cells.csv"), row.names = FALSE)
 
-pairs_strict <- paste(full_KO_cCRE_FC_strict$gene, full_KO_cCRE_FC_strict$peaks, sep = "_")
-
-lv_only <- full_KO_cCRE_FC_FDR %>%
-  filter(diffexpressed_Artery_KO == "No" &
-           diffexpressed_CapArt_KO == "No" &
-           diffexpressed_Cap_KO == "No" &
-           diffexpressed_CapVein_KO == "No" &
-           diffexpressed_LargeVein_KO != "No",
-         diffaccessible_Artery_KO == "No" &
-           diffaccessible_CapArt_KO == "No" &
-           diffaccessible_Cap_KO == "No" &
-           diffaccessible_CapVein_KO == "No" &
-           diffaccessible_LargeVein_KO != "No") %>% 
-  mutate(to_filt = paste(gene, peaks, sep = "_")) %>% 
-  filter(!to_filt %in% pairs_strict) %>% select(-to_filt)
-
-write.csv(x = lv_only, file = glue("{tables_folder}/enhancers_KO_large_vein.csv"), row.names = FALSE)
-
-
-pairs_lv <- paste(lv_only$gene, lv_only$peaks, sep = "_")
-
-cap_to_vein_only <- full_KO_cCRE_FC_FDR %>%
-  filter(diffexpressed_Artery_KO == "No" &
-           diffexpressed_CapArt_KO == "No" &
-           diffexpressed_Cap_KO != "No" &
-           diffexpressed_CapVein_KO != "No" &
-           diffexpressed_LargeVein_KO != "No",
-         diffaccessible_Artery_KO == "No" &
-           diffaccessible_CapArt_KO == "No" &
-           diffaccessible_Cap_KO != "No" &
-           diffaccessible_CapVein_KO != "No" &
-           diffaccessible_LargeVein_KO != "No") %>% 
-  mutate(to_filt = paste(gene, peaks, sep = "_")) %>% 
-  filter(!to_filt %in% c(pairs_strict, pairs_lv)) %>% select(-to_filt)
-
-write.csv(x = cap_to_vein_only, file = glue("{tables_folder}/enhancers_KO_cap_to_large_vein.csv"), row.names = FALSE)
-
-
 
 ## Genomic annotation of accesible enhancer KO
 all_peaks_enhancersKO <- map(cts_atac, ~ .x$peaks) %>% unlist() %>% unique()
@@ -743,7 +770,7 @@ color_mapping <- setNames(color_mapping, annotation_counts$label)
 
 annot_peaks_KO_enhancers <- ggplot(annotation_counts, aes(x = "", y = Percentage, fill = label)) +
   geom_bar(width = 1, stat = "identity", color = "white" ) +
-  coord_polar("y", direction = ) + 
+  coord_polar("y") + 
   scale_fill_manual(values = color_mapping) +
   theme_void() + ggtitle("Genomic annotation of putative enhancers<br><i>PDCD10</i><sup>BECKO</sup> ") +
   theme(plot.title = element_markdown(hjust = 0.5, face = "bold"), 
