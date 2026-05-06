@@ -29,8 +29,8 @@ conda activate "$CONDA_ENV_NAME"
 
 # Log MACS2 env info
 echo "📝 Logging MACS2 conda environment info..."
-conda info --envs > logs/macs2_env_log.txt
-conda list > logs/macs2_env_packages.txt
+conda info --envs > results/logs/macs2_env_log.txt
+conda list > results/logs/macs2_env_packages.txt
 
 
 # Iterate over each BED file in the peak_data_bed directory
