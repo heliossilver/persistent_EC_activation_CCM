@@ -422,7 +422,7 @@ for (loop_var in names(peaks_process_celltype)) {
 
 
 # Optionally save session info
-sink("../logs/sessioninfo_11_RNA_ATAC_pathway_integration_Flox_BEC_subtypes.txt")
+sink("../results/logs/sessioninfo_11_RNA_ATAC_pathway_integration_Flox_BEC_subtypes.txt")
 sessionInfo()
 sink()
 
