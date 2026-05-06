@@ -223,6 +223,6 @@ dev.off()
 
 
 # === Log R session info for reproducibility ===
-sink("../logs/sessioninfo_14_heatmaps_TF_enrichment_per_process.txt")
+sink("../results/logs/sessioninfo_14_heatmaps_TF_enrichment_per_process.txt")
 sessionInfo()
 sink()
