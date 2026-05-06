@@ -153,7 +153,7 @@ color_mapping <- setNames(color_mapping, annotation_counts$label)
 
 annot_peaks_flox_enhancers <- ggplot(annotation_counts, aes(x = "", y = Percentage, fill = label)) +
   geom_bar(width = 1, stat = "identity", color = "white" ) +
-  coord_polar("y", direction = ) + 
+  coord_polar("y") + 
   scale_fill_manual(values = color_mapping) +
   theme_void() + 
   labs(title = "Genomic annotation of non-redundant BEC cCRE atlas",
