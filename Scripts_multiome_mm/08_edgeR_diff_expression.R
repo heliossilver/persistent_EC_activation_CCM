@@ -336,6 +336,6 @@ ggsave(filename = "../results/plots/graphs_endo/upset_gene_up_KO.png", plot = up
 
 
 # Optionally save session info
-sink("../logs/sessioninfo_08_edgeR_diff_expression.txt")
+sink("../results/logs/sessioninfo_08_edgeR_diff_expression.txt")
 sessionInfo()
 sink()
