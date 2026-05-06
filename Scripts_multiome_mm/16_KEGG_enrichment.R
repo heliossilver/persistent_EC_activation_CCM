@@ -328,7 +328,7 @@ ggsave("../results/RNA_ATAC_integration/graphs/kegg_dotplot_wt_specific.png", pl
 
 
 # === Log R session info for reproducibility ===
-sink("../logs/sessioninfo_16_KEGG_enrichment.txt")
+sink("../results/logs/sessioninfo_16_KEGG_enrichment.txt")
 sessionInfo()
 sink()
 
