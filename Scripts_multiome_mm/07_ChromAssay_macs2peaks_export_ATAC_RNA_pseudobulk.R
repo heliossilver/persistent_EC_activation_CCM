@@ -167,6 +167,6 @@ ggsave(filename = "../results/plots/graphs_ATAC/non_redundant_cCRE_annotation.sv
 
 # Save session info
 dir.create("../results/logs", showWarnings = FALSE)
-sink("../logs/sessioninfo_07_ChromAssay_macs2peaks_export_ATAC_RNA_pseudobulk.txt")
+sink("../results/logs/sessioninfo_07_ChromAssay_macs2peaks_export_ATAC_RNA_pseudobulk.txt")
 sessionInfo()
 sink()
